@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RockVRGlobalActions</string>
+    <string name="shutdown_button">ShutDown</string>
+    <string name="reboot_button">Reboot</string>
+</resources>

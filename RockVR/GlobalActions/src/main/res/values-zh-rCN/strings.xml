@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RockVRGlobalActions</string>
+    <string name="shutdown_button">关机</string>
+    <string name="reboot_button">重启</string>
+</resources>

@@ -1,0 +1,4 @@
+configurations.create("default")
+artifacts.add("default", file('vr-release.aar'))
+//artifacts.add("default", file('vr-debug.aar'))
+//artifacts.add("default", file('vr-debug_only.aar'))

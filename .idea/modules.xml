@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/RockVR/Home/RockVR-Home.iml" filepath="$PROJECT_DIR$/RockVR/Home/RockVR-Home.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RockVR/UI/RockVR-UI.iml" filepath="$PROJECT_DIR$/RockVR/UI/RockVR-UI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RockVRHome.iml" filepath="$PROJECT_DIR$/RockVRHome.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libs/rkvr/libs-rkvr.iml" filepath="$PROJECT_DIR$/libs/rkvr/libs-rkvr.iml" />
+    </modules>
+  </component>
+</project>

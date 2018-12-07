@@ -1,0 +1,104 @@
+diff --git a/VRPlayer-master/libs/rajawali/src/main/java/org/rajawali3d/materials/Material.java b/VRPlayer-master/libs/rajawali/src/main/java/org/rajawali3d/materials/Material.java
+index cd4cea5..a9a730e 100755
+--- a/VRPlayer-master/libs/rajawali/src/main/java/org/rajawali3d/materials/Material.java
++++ b/VRPlayer-master/libs/rajawali/src/main/java/org/rajawali3d/materials/Material.java
+@@ -512,9 +514,14 @@ public class Material {
+      * Takes all material parameters and creates the vertex shader and fragment shader and then compiles the program.
+      * This method should only be called on initialization or when parameters have changed.
+      */
++    private boolean mShaderCreated = false;
+     protected void createShaders() {
+-        if (!mIsDirty)
++        // leak
++        //if (!mIsDirty)
++        //    return;
++        if(mShaderCreated)
+             return;
++
+         if (mCustomVertexShader == null && mCustomFragmentShader == null) {
+             //
+             // -- Check textures
+@@ -717,6 +724,7 @@ public class Material {
+         }
+ 
+         mIsDirty = false;
++        mShaderCreated = true;
+     }
+ 
+     /**
+diff --git a/VRPlayer-master/libs/rajawali/src/main/java/org/rajawali3d/materials/textures/Texture.java b/VRPlayer-master/libs/rajawali/src/main/java/org/rajawali3d/materials/textures/Texture.java
+index ec33b48..b766ead 100755
+--- a/VRPlayer-master/libs/rajawali/src/main/java/org/rajawali3d/materials/textures/Texture.java
++++ b/VRPlayer-master/libs/rajawali/src/main/java/org/rajawali3d/materials/textures/Texture.java
+@@ -13,6 +13,7 @@
+ package org.rajawali3d.materials.textures;
+ 
+ import android.graphics.Bitmap;
++import android.util.Log;
+ 
+ 
+ public class Texture extends ASingleTexture {
+diff --git a/VRPlayer-master/libs/rajawali/src/main/java/org/rajawali3d/primitives/Plane.java b/VRPlayer-master/libs/rajawali/src/main/java/org/rajawali3d/primitives/Plane.java
+index f0e0d2e..b552be4 100755
+--- a/VRPlayer-master/libs/rajawali/src/main/java/org/rajawali3d/primitives/Plane.java
++++ b/VRPlayer-master/libs/rajawali/src/main/java/org/rajawali3d/primitives/Plane.java
+@@ -42,6 +42,7 @@ public class Plane extends Object3D {
+ 	private boolean mCreateVertexColorBuffer;
+ 	private Axis mUpAxis;
+ 
++	private boolean mInited = false;
+ 	/**
+ 	 * Create a plane primitive. Calling this constructor will create texture coordinates but no vertex color buffer.
+ 	 * The plane will be facing the camera ({@link Axis.Z}) by default.
+@@ -193,6 +194,10 @@ public class Plane extends Object3D {
+ 	}
+ 
+ 	private void init(boolean createVBOs) {
++		// leak
++		if(mInited)
++			return;
++
+ 		int i, j;
+ 		int numVertices = (mSegmentsW + 1) * (mSegmentsH + 1);
+ 		float[] vertices = new float[numVertices * 3];
+@@ -294,5 +299,7 @@ public class Plane extends Object3D {
+ 		textureCoords = null;
+ 		colors = null;
+ 		indices = null;
++
++		mInited = true;
+ 	}
+ }
+\ No newline at end of file
+diff --git a/VRPlayer-master/libs/rajawali/src/main/java/org/rajawali3d/primitives/Sphere.java b/VRPlayer-master/libs/rajawali/src/main/java/org/rajawali3d/primitives/Sphere.java
+index 0231d46..05b317d 100755
+--- a/VRPlayer-master/libs/rajawali/src/main/java/org/rajawali3d/primitives/Sphere.java
++++ b/VRPlayer-master/libs/rajawali/src/main/java/org/rajawali3d/primitives/Sphere.java
+@@ -39,6 +39,9 @@ public class Sphere extends Object3D {
+ 	private final boolean mCreateVertexColorBuffer;
+     private final boolean mMirrorTextureCoords;
+ 
++	// leak
++	private boolean mInited = false;
++
+ 	/**
+ 	 * Creates a sphere primitive. Calling this constructor will create texture coordinates but no vertex color buffer.
+ 	 *
+@@ -121,6 +124,10 @@ public class Sphere extends Object3D {
+ 	}
+ 
+ 	protected void init(boolean createVBOs) {
++		// leak
++		if(mInited)
++			return;
++
+ 		int numVertices = (mSegmentsW + 1) * (mSegmentsH + 1);
+ 		int numIndices = 2 * mSegmentsW * (mSegmentsH - 1) * 3;
+ 
+@@ -206,5 +213,6 @@ public class Sphere extends Object3D {
+ 		}
+ 
+ 		setData(vertices, normals, textureCoords, colors, indices, createVBOs);
++		mInited = true;
+ 	}
+ }
